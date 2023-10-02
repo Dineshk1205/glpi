@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glpi-deployment
+  namespace: glpi
+spec:
+  selector:
+    matchLabels:
+      app: glpi
+  replicas: 1 # don't change replica set 
+  template:
+    metadata:
+      labels:
+        app: glpi
+    spec:
+      containers:
+      - name: glpi
+        image: dinesh1205reddy/glpi:10.0.10
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: 8Gi
+            cpu: 2
+          requests:
+            memory: 2Gi
+            cpu: 500m
+        volumeMounts:
+          - name: glpipvc
+            mountPath: "/var/www/html/glpi/config"
+      volumes:
+        - name: glpipvc
+          persistentVolumeClaim:
+            claimName: glpipv
+         

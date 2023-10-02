@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mariadbpv
+spec:
+  storageClassName: nfs-v0
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi

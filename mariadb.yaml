@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  replicas: 1 # Update replicascount  according to your case   
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb:10.11
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            limits:
+              memory: 8Gi
+              cpu: 4
+            requests:
+              memory: 1Gi
+              cpu: 500m
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mariadb-root-password
+          volumeMounts:
+          - name: mariadbpvc 
+            mountPath: "/var/lib/mysql"
+      volumes:
+        - name: mariadbpvc
+          persistentVolumeClaim: 
+            claimName: mariadbpv

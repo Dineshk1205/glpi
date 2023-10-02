@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: glpipv
+  namespace: glpi
+spec:
+  storageClassName: nfs-v0
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi

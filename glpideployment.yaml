@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: glpi
-  replicas: 1 # how many replicas of pods we want to create
+  replicas: 1 # how many replicas of pods we want to create.
   template:
     metadata:
       labels:

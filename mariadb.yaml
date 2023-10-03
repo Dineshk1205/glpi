@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mariadb
 spec:
-  replicas: 1 # Update replicascount  according to your case   
+  replicas: 1 # how many replicas of pods we want to create   
   selector:
     matchLabels:
       app: mariadb

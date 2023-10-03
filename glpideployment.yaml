@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: glpi
-  replicas: 1 # don't change replica set 
+  replicas: 1 # how many replicas of pods we want to create
   template:
     metadata:
       labels:
@@ -27,7 +27,25 @@ spec:
             cpu: 500m
         volumeMounts:
           - name: glpipvc
-            mountPath: "/var/www/html/glpi/config"
+            mountPath: /var/www/html/glpi/config
+            subPath: config
+          - name: glpipvc
+            mountPath: /var/www/html/glpi/plugins
+            subPath: plugins
+          - name: glpipvc
+            mountPath: /var/www/html/glpi/marketplace
+            subPath: marketplace
+          - name: glpipvc
+            mountPath: /var/www/html/glpi/files
+            subPath: files
+        lifecycle:
+          postStart:
+            exec:
+              command: 
+                - sh
+                - -c
+                - yes | cp -Rvn /opt/files/ /var/www/html/glpi/
+                - opt/permission.sh
       volumes:
         - name: glpipvc
           persistentVolumeClaim:
